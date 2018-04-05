@@ -27,7 +27,7 @@ WordGraph2Index -i egs/d06-030-02-01.slf -d 0.01 -z w > out.idx
 
 ## Acknowledgment
 
-If you find useful this toolkit in your research, please cite:
+If you find useful this tool in your research, please cite:
 
 ```
 @article{wgidx16,
