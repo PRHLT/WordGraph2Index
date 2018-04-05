@@ -1,4 +1,4 @@
-BINARY	:=      wordGraphTool
+BINARY	:=      WordGraph2Index
 MOD	:=	main WG WGFile WGN-Best WGParsingString WGConfMeasure WGErrCorr WGPrunning
 
 export PREFIX := 
