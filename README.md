@@ -19,11 +19,13 @@ make distclean; make CFLAGS=-m64  # compile for 64 bits
 
 ## Usage
 
+The following command outputs all the words contained in "d06-030-02-01.slf" along with their confidence scores and locations:
+
 ```bash
-wordGraphTools -i egs/d06-030-02-01.lat -d 0.01 -z w > out.idx
+WordGraph2Index -i egs/d06-030-02-01.slf -d 0.01 -z w > out.idx
 ```
 
-## Acknowledgments
+## Acknowledgment
 
 If you find useful this toolkit in your research, please cite:
 
@@ -35,7 +37,6 @@ If you find useful this toolkit in your research, please cite:
  volume = "370-371",
  pages = "497 - 518",
  year = "2016",
- note = "",
  issn = "0020-0255",
  doi = "http://dx.doi.org/10.1016/j.ins.2016.07.063",
  url = "http://www.sciencedirect.com/science/article/pii/S0020025516305461",
