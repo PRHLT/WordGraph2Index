@@ -536,12 +536,32 @@ const uint* WG::getTopologicalOrder() {
   for (uint v=0; v<getTotalNumberOfStates(); v++) 
     if (R[v]==0) deepFirstSearch(v,n,R,P);
 
+  uint *Rinv = new uint[getTotalNumberOfStates()];
   n=0;
   while(!P.empty()) {
     //State *st = getState(P.top());
     //cerr << P.top() << " " << st->getTimeStamp() << endl;
     R[n++] = P.top(); P.pop();
+    Rinv[R[n-1]] = n-1;
   }
+  cerr << endl;
+
+  // This is for dtecting cycles in the WG
+  for (uint v=0; v<getTotalNumberOfStates(); v++) {
+    State *st = getState(R[v]);
+    for (uint i=0; i<st->getNumOfOutputArcs(); i++) {
+      const Arc *arc = getArc(st->getOUTArcID(i));
+      uint w = mapStatesStorage.at(arc->iTarget);
+      if (Rinv[w]<=v) {
+      	cerr << 
+	//Rinv[w] << " " << v << " " <<
+	"WARNING: A Cycle has been detected in the imput WG !" << endl << endl;
+	break;
+      }
+    }
+  }
+  delete [] Rinv;
+
   return (vTO=R);
 }
 
@@ -678,6 +698,9 @@ void WG::buildPostProbMatrix() {
     uint t1 = st1->getTimeStamp();
     State *st2 = getState(arc->iTarget);
     uint t2 = st2->getTimeStamp();
+
+    if (t1 == t2)
+      cerr << "WARNING: Initial and end time stamps of the Arc are the same: " << arc->iId << endl;
 
     uint v = arc->iIdWord - 1; // As arc->iIdWord=0 is for lambda symbol
 //#pragma omp critical
