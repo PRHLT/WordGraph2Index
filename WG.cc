@@ -555,8 +555,7 @@ const uint* WG::getTopologicalOrder() {
       if (Rinv[w]<=v) {
       	cerr << 
 	//Rinv[w] << " " << v << " " <<
-	"WARNING: A Cycle has been detected in the imput WG !" << endl << endl;
-	break;
+	"WARNING: A Cycle has been detected in the imput WG: J=" << arc->iId << endl;
       }
     }
   }

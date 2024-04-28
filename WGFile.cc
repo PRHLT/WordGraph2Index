@@ -240,7 +240,7 @@ bool WGFile::readElements_HTK(WG *wg, const string & dummyTk) {
       }
 
       if (wg->getTotalNumberOfArcs()>=uTNofA || \
-          wg->getTotalNumberOfArcs()!=(uint)arc.iId || \
+          /*wg->getTotalNumberOfArcs()!=(uint)arc.iId ||*/ \
           (!wg->addArc(arc,wtoken,isDummyToken))) {
 	cerr << "ERROR!!! Inconsistent storage of arc " << j << endl;
 	return false;
