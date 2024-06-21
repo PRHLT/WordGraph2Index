@@ -694,9 +694,11 @@ void WG::buildPostProbMatrix() {
   for (uint i=0; i<getTotalNumberOfArcs(); i++) {
     Arc* arc = getArc(i);
     State *st1 = getState(arc->iSource);
-    uint t1 = st1->getTimeStamp();
+                                 // Discount the time stamp of the initial state
+    uint t1 = st1->getTimeStamp() - getState(getInitialState())->getTimeStamp();
     State *st2 = getState(arc->iTarget);
-    uint t2 = st2->getTimeStamp();
+                                 // Discount the time stamp of the initial state
+    uint t2 = st2->getTimeStamp() - getState(getInitialState())->getTimeStamp();
 
     if (t1 == t2)
       cerr << "WARNING: Initial and end time stamps of the Arc are the same: " << arc->iId << endl;
@@ -717,6 +719,8 @@ void WG::buildPostProbMatrix() {
 double WG::getPProbMatrix(uint time, int idWord) {
 
   if (!dPostProbMatrix) buildPostProbMatrix();
+                // Discount the time stamp of the initial state
+  time = time - getState(getInitialState())->getTimeStamp();
   uint uNF = getNumberOfFrames();
   uint uVS = getVocSize();
   uint idW = idWord - 1; // Because idWord=1 is in pos=0 now
@@ -738,12 +742,13 @@ void WG::checkPostProbMatrix() {
   if (!dPostProbMatrix) buildPostProbMatrix();
   uint uNF = getNumberOfFrames();
   uint uVS = getVocSize();
+  uint tInit = getState(getInitialState())->getTimeStamp();
 
   for (uint t=0; t<uNF; t++) {
     double sumScr=0.0;
     for (uint v=0; v<uVS; v++)
       sumScr += dPostProbMatrix[t+v*uNF];
-    cerr << "Time: " << t << " CS: " << sumScr << endl;
+    cerr << "Time: " << t + tInit << " CS: " << sumScr << endl;
   }
 }
 
